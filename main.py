@@ -7,7 +7,7 @@ import falcon
 # Falcon follows the REST architectural style, meaning (among
 # other things) that you think in terms of resources and state
 # transitions, which map to HTTP verbs.
-VERIFY_TOKEN = (os.environ['VERIFY_TOKEN'], 'oi_eu_sou_um_teste')
+VERIFY_TOKEN = os.environ.get('VERIFY_TOKEN', 'oi_eu_sou_um_teste')
 
 
 class ThingsResource(object):
