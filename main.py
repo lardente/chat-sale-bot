@@ -17,7 +17,7 @@ class ThingsResource(object):
         resp.status = falcon.HTTP_200  # This is the default status
         print req.params
         if req.params.get('hub.verify_token', '') == VERIFY_TOKEN:
-            return req.args.get('hub.challenge', '')
+            return req.params.get('hub.challenge', '')
         else:
             return 'Error, wrong validation token'
 
