@@ -17,13 +17,14 @@ class ThingsResource(object):
         resp.status = falcon.HTTP_200  # This is the default status
         print req.params
         if req.params.get('hub.verify_token', '') == VERIFY_TOKEN:
-            return req.params.get('hub.challenge', '')
+            resp.status = falcon.HTTP_200
+            resp.body = req.params.get('hub.challenge', '')
         else:
-            return 'Error, wrong validation token'
+            resp.body = 'Error, wrong validation token'
 
     def on_post(self, req, resp):
         req.get_data()
-        return "ok"
+        resp.body = "ok"
 
 
 # falcon.API instances are callable WSGI apps
