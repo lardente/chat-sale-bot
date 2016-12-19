@@ -23,7 +23,6 @@ class ThingsResource(object):
             resp.body = 'Error, wrong validation token'
 
     def on_post(self, req, resp):
-        req.get_data()
         resp.body = "ok"
 
 
