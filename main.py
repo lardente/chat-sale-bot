@@ -21,7 +21,7 @@ class ThingsResource(object):
             "recipient": {"id": user_id},
             "message": {"text": msg}
         }
-        resp = requests.post('https://graph.facebook.com/v2.6/me/messages?'
+        resp = requests.post('https://graph.facebook.com/v2.8/me/messages?'
                              'access_token=' + ACCESS_TOKEN, json=data)
         print(resp.content)
 
@@ -36,6 +36,8 @@ class ThingsResource(object):
             resp.body = 'Error, wrong validation token'
 
     def on_post(self, req, resp):
+        print req.body
+        print req.params
         data = req.json
         sender = data['entry'][0]['messaging'][0]['sender']['id']
         message = data['entry'][0]['messaging'][0]['message']['text']
