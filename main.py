@@ -3,14 +3,27 @@
 # Let's get this party started!
 import os
 import falcon
+import requests
 
 # Falcon follows the REST architectural style, meaning (among
 # other things) that you think in terms of resources and state
 # transitions, which map to HTTP verbs.
 VERIFY_TOKEN = os.environ.get('VERIFY_TOKEN', 'oi_eu_sou_um_teste')
+ACCESS_TOKEN = ('EAATZASFZAgRX0BAIOBByLwohSjq5Hy7Ggioky2BRIVd7duCnlA4YZAS1mSo2'
+                'IzM1qg3y2XA4C7bf4PsylD1zzCT5yChPzF5MvpXAR4DP14VnXEmkz4DAwkvq0'
+                'dTH2N9np9Kg9hhd8gYWLfZBCrDs59VXPsjCjSDZBShH7ZCLQ0kAZDZD')
 
 
 class ThingsResource(object):
+
+    def reply(user_id, msg):
+        data = {
+            "recipient": {"id": user_id},
+            "message": {"text": msg}
+        }
+        resp = requests.post('https://graph.facebook.com/v2.6/me/messages?'
+                             'access_token=' + ACCESS_TOKEN, json=data)
+        print(resp.content)
 
     def on_get(self, req, resp):
         """Handles GET requests"""
@@ -23,7 +36,12 @@ class ThingsResource(object):
             resp.body = 'Error, wrong validation token'
 
     def on_post(self, req, resp):
-        resp.body = "ok"
+        data = req.json
+        sender = data['entry'][0]['messaging'][0]['sender']['id']
+        message = data['entry'][0]['messaging'][0]['message']['text']
+        self.reply(sender, message[::-1])
+
+        return 'ok'
 
 
 # falcon.API instances are callable WSGI apps
