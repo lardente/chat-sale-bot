@@ -2,6 +2,7 @@
 
 # Let's get this party started!
 import os
+import json
 import falcon
 import requests
 
@@ -38,12 +39,13 @@ class ThingsResource(object):
     def on_post(self, req, resp):
         print req.params
         print req.context
-        data = resp.body
+        data = json.load(req.stream)
+        print data
         sender = data['entry'][0]['messaging'][0]['sender']['id']
+        print sender
         message = data['entry'][0]['messaging'][0]['message']['text']
-        self.reply(sender, message[::-1])
-
-        return 'ok'
+        print message
+        self.reply(sender, message)
 
 
 # falcon.API instances are callable WSGI apps
