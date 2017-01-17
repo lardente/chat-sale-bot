@@ -38,7 +38,7 @@ class ThingsResource(object):
     def on_post(self, req, resp):
         print req.params
         print req.context
-        data = req.json
+        data = resp.body
         sender = data['entry'][0]['messaging'][0]['sender']['id']
         message = data['entry'][0]['messaging'][0]['message']['text']
         self.reply(sender, message[::-1])
