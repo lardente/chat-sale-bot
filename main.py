@@ -15,16 +15,17 @@ ACCESS_TOKEN = ('EAATZASFZAgRX0BAIOBByLwohSjq5Hy7Ggioky2BRIVd7duCnlA4YZAS1mSo2'
                 'dTH2N9np9Kg9hhd8gYWLfZBCrDs59VXPsjCjSDZBShH7ZCLQ0kAZDZD')
 
 
-class ThingsResource(object):
+def reply(user_id, message):
+    data = {
+        "recipient": {"id": user_id},
+        "message": {"text": message}
+    }
+    resp = requests.post('https://graph.facebook.com/v2.8/me/messages?'
+                         'access_token=' + ACCESS_TOKEN, json=data)
+    print(resp.content)
 
-    def reply(user_id, message):
-        data = {
-            "recipient": {"id": user_id},
-            "message": {"text": message}
-        }
-        resp = requests.post('https://graph.facebook.com/v2.8/me/messages?'
-                             'access_token=' + ACCESS_TOKEN, json=data)
-        print(resp.content)
+
+class ThingsResource(object):
 
     def on_get(self, req, resp):
         """Handles GET requests"""
@@ -45,7 +46,7 @@ class ThingsResource(object):
         print sender
         message = data['entry'][0]['messaging'][0]['message']['text']
         print message
-        self.reply(sender, message[::-1])
+        self.reply(sender, message)
         resp.status = falcon.HTTP_200
 
 
