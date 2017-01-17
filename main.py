@@ -83,7 +83,10 @@ class ThingsResource(object):
         print sender
         message = data['entry'][0]['messaging'][0]['message']['text']
         print message
-        reply(sender, message)
+        if message:
+            reply(sender, message)
+        else:
+            reply(sender, "Postback called")
         resp.status = falcon.HTTP_200
 
 
