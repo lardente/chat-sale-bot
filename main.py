@@ -81,7 +81,8 @@ class ThingsResource(object):
         print data
         sender = data['entry'][0]['messaging'][0]['sender']['id']
         print sender
-        message = data['entry'][0]['messaging'][0]['message']['text']
+        message = data.get('entry')[0].get('messaging')[0].get(
+            'message').get('text')
         print message
         if message:
             reply(sender, message)
