@@ -82,10 +82,10 @@ class ThingsResource(object):
         sender = data['entry'][0]['messaging'][0]['sender']['id']
         print sender
         message = data.get('entry')[0].get('messaging')[0].get(
-            'message').get('text')
+            'message')
         print message
         if message:
-            reply(sender, message)
+            reply(sender, message.get('text'))
         else:
             reply(sender, "Postback called")
         resp.status = falcon.HTTP_200
