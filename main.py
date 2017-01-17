@@ -57,6 +57,9 @@ def reply(user_id, message):
             }
         }
     }
+
+    if message:
+        data = message
     resp = requests.post('https://graph.facebook.com/v2.8/me/messages?'
                          'access_token=' + ACCESS_TOKEN, json=data)
     print(resp.content)
