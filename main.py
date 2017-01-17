@@ -46,7 +46,7 @@ class ThingsResource(object):
         print sender
         message = data['entry'][0]['messaging'][0]['message']['text']
         print message
-        self.reply(sender, message)
+        reply(sender, message)
         resp.status = falcon.HTTP_200
 
 
