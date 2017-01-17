@@ -36,8 +36,8 @@ class ThingsResource(object):
             resp.body = 'Error, wrong validation token'
 
     def on_post(self, req, resp):
-        print req.body
         print req.params
+        print req.context
         data = req.json
         sender = data['entry'][0]['messaging'][0]['sender']['id']
         message = data['entry'][0]['messaging'][0]['message']['text']
