@@ -17,10 +17,10 @@ ACCESS_TOKEN = ('EAATZASFZAgRX0BAIOBByLwohSjq5Hy7Ggioky2BRIVd7duCnlA4YZAS1mSo2'
 
 class ThingsResource(object):
 
-    def reply(user_id, msg):
+    def reply(user_id, message):
         data = {
             "recipient": {"id": user_id},
-            "message": {"text": msg}
+            "message": {"text": message}
         }
         resp = requests.post('https://graph.facebook.com/v2.8/me/messages?'
                              'access_token=' + ACCESS_TOKEN, json=data)
@@ -45,7 +45,8 @@ class ThingsResource(object):
         print sender
         message = data['entry'][0]['messaging'][0]['message']['text']
         print message
-        self.reply(sender, message)
+        self.reply(sender, message[::-1])
+        resp.status = falcon.HTTP_200
 
 
 # falcon.API instances are callable WSGI apps
